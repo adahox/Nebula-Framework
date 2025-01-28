@@ -1,0 +1,5 @@
+<tab name="Healer">
+    <Panel id="panelHealer" height="300" border-width="1" border-color="#ff0000">
+        <Label background-color="#23452345234452345" text="Healer Module 2" textAlign="16" />
+    </Panel>
+</tab>
