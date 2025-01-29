@@ -86,7 +86,6 @@ function ParserOTML:parse(mlString)
                 root = documentNode
                 otmlDocument:setDefaultTab(documentNode:getPropertyByName('name'))
             else
-
                 otmlDocument:addChild(documentNode, parentNode)
                 parentNode = documentNode
             end

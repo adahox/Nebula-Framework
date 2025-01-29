@@ -1,49 +1,52 @@
 <Otml name="Heal" version="10.5">
-    <Panel
-        height="300"
-        borderWidth="1"
-        borderColor="#ffffff"
-        marginRight="4"
-        marginLeft="4"
-    >
-        <Label
-            backgroundColor="#FF000055"
-            text="Healer Module"
-            id="titleModule"
-            textAlign="16"
-            right="parentRight"
-            left="parentLeft"
-            top="parentTop">
-        </Label>
-        <BotItem
-            marginTop="4"
-            marginLeft="4"
-            id="healBotItem"
-            top="prevBottom"
-            left="parentLeft"
-        >
-        </BotItem>
-        <HorizontalScroll
-            anchor="AnchorTop,titleModule,AnchorBottom"
-            left="prevRight"
-            marginTop="14"
-            marginLeft="4"
-            right="parentRight"
+    <Tab name="Heal">
+        <Panel
+            height="300"
+            borderWidth="1"
+            borderColor="#ffffff"
             marginRight="4"
-        >
-        </HorizontalScroll>
-        <Label
-            backgroundColor="#00000055"
-            text=""
-            id="healHSvalue"
-            textAlign="16"
-            right="parentRight"
-            left="parentLeft"
-            anchor="AnchorTop,healBotItem,AnchorBottom"
-            marginTop="4"
             marginLeft="4"
-            marginRight="4"
         >
-        </Label>
-    </Panel>
+            <Label
+                backgroundColor="#FF000055"
+                text="Healer Module"
+                id="titleModule"
+                textAlign="16"
+                right="parentRight"
+                left="parentLeft"
+                top="parentTop">
+            </Label>
+            <BotItem
+                marginTop="4"
+                marginLeft="4"
+                id="healBotItem"
+                top="prevBottom"
+                left="parentLeft"
+            >
+            </BotItem>
+            <HorizontalScroll
+                anchor="AnchorTop,titleModule,AnchorBottom"
+                left="prevRight"
+                marginTop="14"
+                marginLeft="4"
+                right="parentRight"
+                marginRight="4"
+            >
+            </HorizontalScroll>
+            <Label
+                backgroundColor="#00000055"
+                text=""
+                id="healHSvalue"
+                textAlign="16"
+                right="parentRight"
+                left="parentLeft"
+                anchor="AnchorTop,healBotItem,AnchorBottom"
+                marginTop="4"
+                marginLeft="4"
+                marginRight="4"
+            >
+            </Label>
+        </Panel>
+    </Tab>
+
 </Otml >

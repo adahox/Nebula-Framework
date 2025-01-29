@@ -1,3 +1,9 @@
+--[[
+    StylesHandler
+    Responsável por gerenciar as atributos dos Widgets  que são declarados no OTXML atribuir os respectivos valores.
+
+    @author: Adão Dias
+]]
 StylesHandler = {}
 StylesHandler.__index = StylesHandler
 
@@ -29,8 +35,6 @@ end
 
 function StylesHandler:buildStyle(widget)
     for _, property in ipairs(self.documentNode.properties) do
-         --print("\r\n" .. property.name .. " => " .. property.valor)
-        -- Verifica se a propriedade existe em styleProperties
         local func = self.styleProperties[property.name]
         
         func(widget, property.valor)  -- Corrected: call the function with widget as the first argument
