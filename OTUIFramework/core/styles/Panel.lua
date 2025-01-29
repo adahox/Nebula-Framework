@@ -1,17 +1,17 @@
-PanelStyle = {}
+PanelStyle = setmetatable({}, StylesHandler)
 PanelStyle.__index = PanelStyle
 
-function PanelStyle:create(parent)
-    -- criamos o Panel
+function PanelStyle:create(documentNode, parent)
+
+    local self = setmetatable(StylesHandler:init(documentNode), StylesHandler);
+
     if not parent then
         parent = nil
     end
 
-    local panel =  PanelUI:new(parent)
-    panel:setId("panel_criado")
-    panel:setHeight(300)
-    panel:setBorderColor("#ff0000")
-    panel:setBorderWidth(1)
+    local widget =  PanelUI:new(parent)
+    self:buildStyle(widget)
 
-    return panel
+
+    return widget
 end

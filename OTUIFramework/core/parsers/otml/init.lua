@@ -13,9 +13,12 @@ function ParserOTML:run()
     self.stylesPath = "OTUIFramework/core/styles"
     
     self.styles = {
+        "init",
         "Otml",
         "Panel",
-        "Label"
+        "Label",
+        "BotItem",
+        "HorizontalScroll"
     }
 
     self.parseClassDocuments = {
@@ -31,7 +34,9 @@ function ParserOTML:run()
     self.stylesMap = {
         Otml = OTMLStyle,
         Panel = PanelStyle,
-        Label = LabelStyle
+        Label = LabelStyle,
+        BotItem = BotItemStyle,
+        HorizontalScroll = HorizontalScrollStyle
     }
 
     for _, classe in ipairs(self.parseClassDocuments) do
@@ -56,19 +61,21 @@ end
 
 
 function ParserOTML:parse(mlString)
-    print(mlString)
+    --print(mlString)
     local root = nil
     local otmlDocument = OTMLDocument:new()
     local parent = nil
     local parentNode = nil
-    for isClosing, tag, attributes, selfClosing in mlString:gmatch("<(/?)([%w_]+)(.-)>") do
-
-        print("_ : " .. isClosing)
-    
+    local documentNode = nil
+    local actualParent = nil
+    local isClosed = false
+    for isClosing, tag, attributes, selfClosing in mlString:gmatch("<(/?)([%w_]+)(.-)>") do    
+        
         if isClosing:sub(1, 1) == '/' then
+            isClosed = true
             goto continue
         else
-            local documentNode = OTMLDocumentNode:new(tag)
+            documentNode = OTMLDocumentNode:new(tag)
         
             for key, value in string.gmatch(attributes, "([%w_]+)=\"([^\"]+)\"") do
                 local property = OTMLDocumentNodeProperty:new(key, value)
@@ -79,20 +86,24 @@ function ParserOTML:parse(mlString)
                 root = documentNode
                 otmlDocument:setDefaultTab(documentNode:getPropertyByName('name'))
             else
+
                 otmlDocument:addChild(documentNode, parentNode)
                 parentNode = documentNode
             end
         end
-
-
         -- Carregue o arquivo usando loadfile
-        parent = self.stylesMap[tag]:create(parent)
-
-        if (parent) then
-            print("parent_id = " .. parent:getId())
-        end
+        local widget = self.stylesMap[tag]:create(documentNode, parent)
         
-         ::continue::
+        if not parent then
+            parent = widget
+            actualParent = tag
+        elseif isClosed and actualParent == tag then
+            isClosed = false
+            parent = nil
+        end
+
+        ::continue::
+         
     end
 end
 

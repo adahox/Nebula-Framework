@@ -3,6 +3,7 @@
         "setWidgetAnchors",
         "generateWidgetIds",
         "g_resources",
-        "setDefaultTab"
+        "setDefaultTab",
+        "handleAnchors"
     ]
 }

@@ -10,8 +10,10 @@ OTUIFramework.__index = OTUIFramework
 -- Construtor da classe OTUIFramework
 function OTUIFramework.new(self)
     
-    dofile("OTUIFramework/core/ui/init.lua") -- load core ui files
-    dofile("OTUIFramework/core/parsers/otml/init.lua") -- load otml parser
+    dofile("OTUIFramework/core/ui/init.lua")
+    dofile("OTUIFramework/core/parsers/otml/init.lua")
+    dofile("OTUIFramework/core/Utils/init.lua")
+
     
     CoreUI:load()
 

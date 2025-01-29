@@ -8,8 +8,8 @@ Parent = {
     next='next',
     parent='parent'
 }
--- define âncoras 
-Anchors = {
+
+Anchor = {
     AnchorNone = 0,
     AnchorTop = 1,
     AnchorBottom = 2,
@@ -17,6 +17,24 @@ Anchors = {
     AnchorRight = 4,
     AnchorVerticalCenter = 5,
     AnchorHorizontalCenter = 6
+}
+
+-- define âncoras 
+Anchors = {
+    prevBottom = { Parent.prev, Anchor.AnchorBottom },
+    prevTop = { Parent.prev, Anchor.AnchorTop },
+    prevLeft = { Parent.prev, Anchor.AnchorLeft },
+    prevRight = { Parent.prev, Anchor.AnchorRight },
+    -- parent
+    parentBottom = { Parent.parent, Anchor.AnchorBottom },
+    parentTop = { Parent.parent, Anchor.AnchorTop },
+    parentLeft = { Parent.parent, Anchor.AnchorLeft },
+    parentRight = { Parent.parent, Anchor.AnchorRight },
+    -- next
+    nextBottom = { Parent.next, Anchor.AnchorBottom },
+    nextTop = { Parent.next, Anchor.AnchorTop },
+    nextLeft = { Parent.next, Anchor.AnchorLeft },
+    nextRight = { Parent.next, Anchor.AnchorRight },
 }
 
 -- Função de criação de widget
@@ -38,16 +56,11 @@ function WidgetUI:create(widgetName, parent)
     self.widget = WidgetUI:make(widgetName, parent)
     
     self:setId(generateWidgetIds())
-    if not widgetName == "PanelUI" then
-        self:setLeftAnchor(Anchors.AnchorLeft, Parent.parent)
-        self:setTopAnchor(Anchors.AnchorTop, Parent.parent)
-    end
-
     return self
 end
 
 function WidgetUI:setId(id)
-    self.widget:setId(id .. "_WIDGET")
+    self.widget:setId(id)
 end
 
 function WidgetUI:getId()
@@ -55,26 +68,50 @@ function WidgetUI:getId()
 end
 
 -- Métodos para setar âncoras
-function WidgetUI:setLeftAnchor(anchorValue, parent)
-    setWidgetAnchors(self.widget, Anchors.AnchorLeft, parent, anchorValue)
+function WidgetUI:setLeftAnchor(value)
+    local anchor = handleAnchors(value)
+    setWidgetAnchors(self.widget, Anchor.AnchorLeft, anchor.parent, anchor.alignment)
 end
 
-function WidgetUI:setRightAnchor(anchorValue, parent)
-    setWidgetAnchors(self.widget, Anchors.AnchorRight, parent, anchorValue)
+function WidgetUI:setRightAnchor(value)
+    local anchor = handleAnchors(value)
+    setWidgetAnchors(self.widget, Anchor.AnchorRight, anchor.parent, anchor.alignment)
 end
 
-function WidgetUI:setTopAnchor(anchorValue, parent)
-    setWidgetAnchors(self.widget, Anchors.AnchorTop, parent, anchorValue)
+function WidgetUI:setTopAnchor(value)
+    local anchor = handleAnchors(value)
+    setWidgetAnchors(self.widget, Anchor.AnchorTop, anchor.parent, anchor.alignment)
 end
 
-function WidgetUI:setBottomAnchor(anchorValue, parent)
-    setWidgetAnchors(self.widget, Anchors.AnchorBottom, parent, anchorValue)
+function WidgetUI:setBottomAnchor(value)
+    local anchor = handleAnchors(value)
+    setWidgetAnchors(self.widget, Anchor.AnchorBottom, anchor.parent, anchor.alignment)
+end
+
+function WidgetUI:setAnchor(value)
+
+    local table = Utils.split(value, ",")
+    local widgetAnchored
+    local reference
+    local widgetReferenceAnchor
+    if type(table) == "table" then
+        widgetAnchored = Anchor[table[1]]
+        reference = table[2] -- actually it is a widget ID
+        widgetReferenceAnchor = Anchor[table[3]]
+        print("widgetAnchored = " .. Anchor[table[1]] .. "\r\n reference = " .. table[2] .. "\r\n widgetReferenceAnchor = " .. Anchor[table[3]])
+    else
+        print("Não foi encontrado uma table para processar o setAnchor()")
+        return false
+    end
+
+    setWidgetAnchors(self.widget, widgetAnchored, reference, widgetReferenceAnchor)
 end
 
 -- Método privado para ancorar widgets
 function setWidgetAnchors(widget, widgetAnchor, parent, anchorValue)
     widget:addAnchor(widgetAnchor, parent, anchorValue)
 end
+
 
 function WidgetUI:setMarginTop(value)
     if self.widget then
@@ -102,7 +139,7 @@ end
 
 function WidgetUI:setHeight(value)
     if self.widget then
-        self.widget:setHeight(value)
+        self.widget:setHeight(tonumber(value))
     end
 end
 
@@ -128,6 +165,43 @@ function WidgetUI:getBorderColor()
     if self.widget then
         self.widget:getBorderColor()
     end
+end
+
+function WidgetUI:setText(value)
+    if self.widget then
+        self.widget:setText(value)
+    end
+end
+
+function WidgetUI:getText()
+    if self.widget then
+        self.widget:getText()
+    end
+end
+
+function WidgetUI:setBackgroundColor(value)
+    if self.widget then
+        self.widget:setBackgroundColor(value)
+    end
+end
+
+function WidgetUI:setTextAlign(value)
+    if self.widget then
+        self.widget:setTextAlign(value)
+    end
+end
+
+
+function handleAnchors(value)
+    
+    local valor = Anchors[value]
+    local parent = valor[1]
+    local alignment = valor[2]
+   -- print(parent, alignment)
+    return {
+        parent=parent,
+        alignment=alignment
+    }
 end
 
 function generateWidgetIds()

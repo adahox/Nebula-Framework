@@ -19,7 +19,7 @@ function OTMLDocumentNode:getPropertyByName(name)
 
     for _, property in ipairs(self.properties) do
         if property:getName() == name then
-            return property.value
+            return property.valor
         end
     end
 end

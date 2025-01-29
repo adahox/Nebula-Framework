@@ -4,7 +4,7 @@ OTMLDocumentNodeProperty.__index = OTMLDocumentNodeProperty
 function OTMLDocumentNodeProperty:new(name, value)
     local self = setmetatable({}, OTMLDocumentNodeProperty)
     self.name = name
-    self.value = value
+    self.valor = value
 
     return self
 end

@@ -1,14 +1,17 @@
-LabelStyle = {}
+LabelStyle = setmetatable({}, StylesHandler)
 LabelStyle.__index = LabelStyle
 
-function LabelStyle:create(parent)
-    -- criamos o label
+function LabelStyle:create(documentNode, parent)
+
+    local self = setmetatable(StylesHandler:init(documentNode), LabelStyle);
+
     if not parent then
         parent = nil
     end
 
-    local label =  LabelUI:new(parent)
-    label:setId("label_criado")
-    label:setText("oiMundo")
-    return label
+    local widget =  LabelUI:new(parent)
+
+    self:buildStyle(widget)
+
+    return widget
 end

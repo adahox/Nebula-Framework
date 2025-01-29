@@ -1,6 +1,5 @@
 -- PanelUI
 PanelUI = setmetatable({}, WidgetUI)
-
 PanelUI.__index = PanelUI
 
 function PanelUI:new(parent)

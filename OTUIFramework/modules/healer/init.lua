@@ -1,6 +1,6 @@
 setDefaultTab("Heal")
 
-print("loading healer.lua")
+--print("loading healer.lua")
 
 local ui = setupUI([[
 Panel
