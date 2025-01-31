@@ -43,14 +43,13 @@ function WidgetUI:make(widgetName, parent)
     if parent then
         return UI.createWidget(widgetName, parent.widget)
     end 
-
+    print("criando widget => " .. widgetName)
     return UI.createWidget(widgetName)
     
 end
 
 function WidgetUI:create(widgetName, parent)
-
-
+    
     local self = setmetatable({}, WidgetUI)
     
     self.widget = WidgetUI:make(widgetName, parent)
@@ -65,6 +64,19 @@ end
 
 function WidgetUI:getId()
     return self.widget:getId()
+end
+
+
+function WidgetUI:setName(widgetName)
+    self.name = widgetName
+end
+
+function WidgetUI:getName()
+    if not self.name then
+        return ""
+    end
+    
+    return self.name
 end
 
 -- Métodos para setar âncoras
@@ -98,7 +110,6 @@ function WidgetUI:setAnchor(value)
         widgetAnchored = Anchor[table[1]]
         reference = table[2] -- actually it is a widget ID
         widgetReferenceAnchor = Anchor[table[3]]
-        print("widgetAnchored = " .. Anchor[table[1]] .. "\r\n reference = " .. table[2] .. "\r\n widgetReferenceAnchor = " .. Anchor[table[3]])
     else
         print("Não foi encontrado uma table para processar o setAnchor()")
         return false
@@ -111,7 +122,6 @@ end
 function setWidgetAnchors(widget, widgetAnchor, parent, anchorValue)
     widget:addAnchor(widgetAnchor, parent, anchorValue)
 end
-
 
 function WidgetUI:setMarginTop(value)
     if self.widget then
@@ -191,6 +201,23 @@ function WidgetUI:setTextAlign(value)
     end
 end
 
+function WidgetUI:addOption(value)
+    if self.widget then
+        self.widget:addOption(value)
+    end
+end
+
+function WidgetUI:setWidth(value)
+    if self.widget then
+        self.widget:setWidth(value)
+    end
+end
+
+function WidgetUI:setTitle(value)
+    if self.widget then
+        self.widget:setTitle(value) 
+    end
+end
 
 function handleAnchors(value)
     

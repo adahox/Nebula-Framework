@@ -18,7 +18,12 @@ function ParserOTML:run()
         "Panel",
         "Label",
         "BotItem",
-        "HorizontalScroll"
+        "HorizontalScroll",
+        "Tab",
+        "Button",
+        "Checkbox",
+        "ComboBox",
+        "Window",
     }
 
     self.parseClassDocuments = {
@@ -36,7 +41,12 @@ function ParserOTML:run()
         Panel = PanelStyle,
         Label = LabelStyle,
         BotItem = BotItemStyle,
-        HorizontalScroll = HorizontalScrollStyle
+        HorizontalScroll = HorizontalScrollStyle,
+        Tab = TabStyle,
+        Button = ButtonStyle,
+        Checkbox = CheckboxStyle,
+        ComboBox = ComboBoxStyle,
+        Window = WindowStyle,
     }
 
     for _, classe in ipairs(self.parseClassDocuments) do
@@ -61,20 +71,23 @@ end
 
 
 function ParserOTML:parse(mlString)
-    --print(mlString)
     local root = nil
     local otmlDocument = OTMLDocument:new()
     local parent = nil
     local parentNode = nil
     local documentNode = nil
-    local actualParent = nil
+    local lastClosedTag = nil
     local isClosed = false
+    local stack = {}
     for isClosing, tag, attributes, selfClosing in mlString:gmatch("<(/?)([%w_]+)(.-)>") do    
         
         if isClosing:sub(1, 1) == '/' then
             isClosed = true
+            lastClosedTag = tag
+            print("closing >> " .. tag)
             goto continue
         else
+            isClosed = false
             documentNode = OTMLDocumentNode:new(tag)
         
             for key, value in string.gmatch(attributes, "([%w_]+)=\"([^\"]+)\"") do
@@ -84,57 +97,30 @@ function ParserOTML:parse(mlString)
 
             if not root then
                 root = documentNode
-                otmlDocument:setDefaultTab(documentNode:getPropertyByName('name'))
             else
+                if (parent) then
+                    print(">> openning = " .. tag .. " >> " .. parent:getName())
+                end
                 otmlDocument:addChild(documentNode, parentNode)
                 parentNode = documentNode
             end
         end
-        -- Carregue o arquivo usando loadfile
-        local widget = self.stylesMap[tag]:create(documentNode, parent)
-        
-        if not parent then
-            parent = widget
-            actualParent = tag
-        elseif isClosed and actualParent == tag then
-            isClosed = false
-            parent = nil
-        end
 
+        local widget = self.stylesMap[tag]:create(documentNode, parent)
+       
+        if not parent and widget then
+            parent = widget
+            lastClosedTag = tag
+            print("parent atual: " .. tag)
+            table.insert(stack, parent)
+        elseif isClosed and tag == lastClosedTag then
+            lastClosedTag = false
+            table.remove(stack)
+            print("voltando parent atual: " .. parent:getName())
+            parent = stack[#stack]
+        end
+        
         ::continue::
-         
+        
     end
 end
-
--- function ParserOTML:createWidgetFromTag(tag, attributes, parent)
-
---      -- implementar um load dos "styles" aqui
---     local element
---     if tagName == "Label" then
---         element = LabelUI:new(parent.widget)
---     elseif tagName == "Panel" then
---         element = PanelUI:new()
---     end
-
---     -- Processar os atributos da tag e configurá-los no widget
---     for key, value in string.gmatch(attributes, "([%w_]+)=\"([^\"]+)\"") do
---         print(tagName .. " {'" .. key .. "': '" .. value .. "'}")
---         if key == "id" then
---             element:setId(value)
---         elseif key == "background-color" then
---             element:setBackgroundColor(value)
---         elseif key == "textAlign" then
---             element:setTextAlign(value)
---         elseif key == "text" then
---             element:setText(value)
---         elseif key == "height" then
---             element:setHeight(value)
---         elseif key == "border-color" then
---             element:setBorderColor(value)
---         elseif key == "border-width" then
---             element:setBorderWidth(value)
---         end
---     end
-
---     return element
--- end

@@ -11,14 +11,11 @@ OTUIFramework.__index = OTUIFramework
 function OTUIFramework.new(self)
     
     dofile("OTUIFramework/core/ui/init.lua")
-    dofile("OTUIFramework/core/parsers/otml/init.lua")
+
     dofile("OTUIFramework/core/Utils/init.lua")
 
     
     CoreUI:load()
-
-    -- now we can parse files.
-    ParserOTML:run()
 
     self = setmetatable({}, OTUIFramework)
     
@@ -26,7 +23,7 @@ function OTUIFramework.new(self)
 end
 
 function OTUIFramework:loadFile(moduleName)
-    -- print("loading module: " .. moduleName)    
+    print("loading module: " .. moduleName)    
     dofile("/OTUIFramework/modules/" .. moduleName .. "/init.lua")
 end
 
@@ -35,4 +32,10 @@ function OTUIFramework:loadModule(modulesList)
         OTUIFramework:loadFile(module)    
     end
     return true
+end
+
+function OTUIFramework:loadParse()
+    dofile("OTUIFramework/core/parsers/otml/init.lua")
+    
+    ParserOTML:run()
 end

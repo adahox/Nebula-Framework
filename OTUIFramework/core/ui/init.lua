@@ -7,7 +7,11 @@ local uiElements = {
     "Label",
     "BotItem",
     "HorizontalScroll",
-    "Panel"
+    "Panel",
+    "Button",
+    "Checkbox",
+    "ComboBox",
+    "Window",
 }
 
 function CoreUI.load(self)
@@ -21,7 +25,9 @@ function CoreUI.load(self)
         label=LabelUI,
         botitem=BotItemUI,
         horizontalScroll=HorizontalScrollUI,
-        panel=PanelUI
+        panel=PanelUI,
+        button=ButtonUI,
+        window=WindowUI
     }, CoreUI)
 
     return self

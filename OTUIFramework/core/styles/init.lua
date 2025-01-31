@@ -28,6 +28,9 @@ function StylesHandler:init(documentNode)
         marginRight = WidgetUI.setMarginRight,
         marginTop = WidgetUI.setMarginTop,
         marginBottom = WidgetUI.setMarginBottom,
+        name = WidgetUI.setName,
+        width = WidgetUI.setWidth,
+        title = WidgetUI.setTitle,
     }
 
     return self
@@ -38,7 +41,5 @@ function StylesHandler:buildStyle(widget)
         local func = self.styleProperties[property.name]
         
         func(widget, property.valor)  -- Corrected: call the function with widget as the first argument
-
-        print("widgetId = " .. widget:getId())
-        end
+    end
 end

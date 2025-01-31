@@ -1,9 +1,4 @@
 {
-    "Lua.diagnostics.globals": [
-        "setWidgetAnchors",
-        "generateWidgetIds",
-        "g_resources",
-        "setDefaultTab",
-        "handleAnchors"
-    ]
+    "Lua.runtime.version": "LuaJIT",
+    "Lua.diagnostics.globals": []
 }

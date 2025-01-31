@@ -3,6 +3,7 @@ local loadableModulesList = {
   "items",
   "vlib",
   "configs",
+  "game_bot"
 
 }
 
@@ -14,3 +15,5 @@ loadFramework()
 local otuiFramework = OTUIFramework:new()
 
 otuiFramework:loadModule(loadableModulesList)
+otuiFramework:loadParse()
+

@@ -1,52 +1,18 @@
-<Otml name="Heal" version="10.5">
-    <Tab name="Heal">
-        <Panel
-            height="300"
-            borderWidth="1"
-            borderColor="#ffffff"
-            marginRight="4"
-            marginLeft="4"
-        >
-            <Label
-                backgroundColor="#FF000055"
-                text="Healer Module"
-                id="titleModule"
-                textAlign="16"
-                right="parentRight"
-                left="parentLeft"
-                top="parentTop">
+<Otml version="10.5">
+    <Tab name="Heal Panel" controller="HealController">
+        <Panel name="painel_pai" height="500" borderWidth="1" borderColor="#ffffff" marginRight="4" id="panel_principal" marginLeft="4">
+            <Label backgroundColor="#FF000055" text="Healer Module" id="titleModule" textAlign="16" right="parentRight" left="parentLeft" top="parentTop">
             </Label>
-            <BotItem
-                marginTop="4"
-                marginLeft="4"
-                id="healBotItem"
-                top="prevBottom"
-                left="parentLeft"
-            >
-            </BotItem>
-            <HorizontalScroll
-                anchor="AnchorTop,titleModule,AnchorBottom"
-                left="prevRight"
-                marginTop="14"
-                marginLeft="4"
-                right="parentRight"
-                marginRight="4"
-            >
-            </HorizontalScroll>
-            <Label
-                backgroundColor="#00000055"
-                text=""
-                id="healHSvalue"
-                textAlign="16"
-                right="parentRight"
-                left="parentLeft"
-                anchor="AnchorTop,healBotItem,AnchorBottom"
-                marginTop="4"
-                marginLeft="4"
-                marginRight="4"
-            >
-            </Label>
+            <BotItem marginTop="4" marginLeft="4" id="healBotItem" top="prevBottom" left="parentLeft"></BotItem>
+            <HorizontalScroll anchor="AnchorTop,titleModule,AnchorBottom" left="prevRight" marginTop="14" marginLeft="4" right="parentRight" marginRight="4"></HorizontalScroll>
+            <Label backgroundColor="#FF000055" text="" id="healHSvalue" textAlign="16" right="parentRight" left="parentLeft" anchor="AnchorTop,healBotItem,AnchorBottom" marginTop="4" marginLeft="4" marginRight="4"></Label>
+            <Label backgroundColor="#00FF0055" text="" id="healHSvalue2" textAlign="16" right="parentRight" left="parentLeft" top="prevBottom" marginTop="4" marginLeft="4" marginRight="4"></Label>
+            <Label backgroundColor="#0000FF55" text="" id="healHSvalue3" textAlign="16" right="parentRight" left="parentLeft" top="prevBottom" marginTop="4" marginLeft="4" marginRight="4"></Label>
+            <Button text="configs" id="button" top="prevBottom" marginTop="4" left="parentLeft" marginLeft="4" right="parentRight" marginRight="4"></Button>
+            <Checkbox text="enable bot" id="checkbox" top="prevBottom" marginTop="4" left="parentLeft" marginLeft="4" right="parentRight" marginRight="4"></Checkbox>
+            <ComboBox id="combo_principal" width="100" text="enable bot" top="prevBottom" marginTop="4" left="parentLeft" marginLeft="4" marginRight="4"></ComboBox>
+            <Button text="active" id="button2" anchor="AnchorTop,checkbox,AnchorBottom" marginTop="4" left="prevRight" marginLeft="4" right="parentRight" marginRight="4"></Button>
+            <Panel name="panel_secundario" height="100" borderWidth="1" top="prevBottom" backgroundColor="#CCEEFF" marginRight="4" id="panel_secundario" marginLeft="4"></Panel>
         </Panel>
     </Tab>
-
 </Otml >
