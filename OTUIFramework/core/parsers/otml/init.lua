@@ -1,11 +1,21 @@
 
-ParserOTML = {}
-ParserOTML.__index = ParserOTML
+ParseOTXML = {}
+ParseOTXML.__index = ParseOTXML
 
-function ParserOTML:run()
+local hasRoot = nil
+local parent = nil
+
+local documentNode = nil
+local lastOpeningTag = nil
+local isNodeOpened = false
+local widget = nil
+local lastParent  = nil
+local stack = {}
+
+function ParseOTXML:run()
 
     local self = {}
-    setmetatable(self,  {__index = ParserOTML})
+    setmetatable(self,  {__index = ParseOTXML})
     
     self.basePath = "/bot/estudo/OTUIFramework"
     self.viewPath = self.basePath .. "/view/"
@@ -24,6 +34,9 @@ function ParserOTML:run()
         "Checkbox",
         "ComboBox",
         "Window",
+        "FlatPanel",
+        "HorizontalSeparator",
+        "ProgressBar"
     }
 
     self.parseClassDocuments = {
@@ -47,6 +60,9 @@ function ParserOTML:run()
         Checkbox = CheckboxStyle,
         ComboBox = ComboBoxStyle,
         Window = WindowStyle,
+        FlatPanel = FlatPanelStyle,
+        HorizontalSeparator=HorizontalSeparatorStyle,
+        ProgressBar=ProgressBarStyle,
     }
 
     for _, classe in ipairs(self.parseClassDocuments) do
@@ -57,70 +73,108 @@ function ParserOTML:run()
 
     local mainOTMLContent = self:loadTemplate(otmlMainFile)
     
-    self:parse(ParserOTML:cleanMLString(mainOTMLContent))
+    self:parse(ParseOTXML:cleanMLString(mainOTMLContent))
 end
 
-function ParserOTML:loadTemplate(fileName)
+function ParseOTXML:loadTemplate(fileName)
     return g_resources.readFileContents(fileName)
 end
 
-function ParserOTML:cleanMLString(str)
+function ParseOTXML:cleanMLString(str)
     -- Substituir múltiplos espaços por um único espaço e remover quebras de linha extras
     return str:gsub("%s+", " "):gsub("\n", " "):gsub("\r", " "):gsub("^%s*(.-)%s*$", "%1")
 end
 
+function ParseOTXML:isOpeningTag(tagSignal)
+    return tagSignal:sub(1, 1) == ''
+end 
 
-function ParserOTML:parse(mlString)
-    local root = nil
-    local otmlDocument = OTMLDocument:new()
-    local parent = nil
-    local parentNode = nil
-    local documentNode = nil
-    local lastClosedTag = nil
-    local isClosed = false
-    local stack = {}
-    for isClosing, tag, attributes, selfClosing in mlString:gmatch("<(/?)([%w_]+)(.-)>") do    
-        
-        if isClosing:sub(1, 1) == '/' then
-            isClosed = true
-            lastClosedTag = tag
-            print("closing >> " .. tag)
-            goto continue
-        else
-            isClosed = false
-            documentNode = OTMLDocumentNode:new(tag)
-        
-            for key, value in string.gmatch(attributes, "([%w_]+)=\"([^\"]+)\"") do
-                local property = OTMLDocumentNodeProperty:new(key, value)
-                documentNode:addProperty(property)
-            end
+function ParseOTXML:isClosingTag(tagSignal)
+    return tagSignal:sub(1, 1) == '/'
+end 
 
-            if not root then
-                root = documentNode
-            else
-                if (parent) then
-                    print(">> openning = " .. tag .. " >> " .. parent:getName())
-                end
-                otmlDocument:addChild(documentNode, parentNode)
-                parentNode = documentNode
-            end
+function ParseOTXML:rootSetup()
+    if not hasRoot then
+        hasRoot = true
+    end
+end 
+
+function ParseOTXML:setupWidgetAttributes(documentNode, attributes)
+    for key, value in string.gmatch(attributes, "([%w_]+)=\"([^\"]+)\"") do
+        local property = OTMLDocumentNodeProperty:new(key, value)
+        documentNode:addProperty(property)
+    end
+end
+
+function ParseOTXML:setupParent()
+    if not isNodeOpened then
+        table.insert(stack, widget)
+        lastParent = parent
+        parent = widget
+    end
+
+end
+
+function ParseOTXML:setupWidget(tag)
+
+    self:setupParent()
+
+    widget = self.stylesMap[tag]:create(documentNode, parent)
+end
+
+function ParseOTXML:setupClosing(tagName)
+    if tagName ~= lastOpeningTag then
+        lastParent = table.remove(stack)
+        parent = stack[#stack]
+    end
+end
+
+function ParseOTXML:hasNoParent()
+    return parent == nil
+end
+
+ function ParseOTXML:isValidWidget()
+    return type(widget) == "table"
+end
+
+function ParseOTXML:parse(xmlString)
+    
+    for tagSignal, tagName, attributes, isSelfClosing in xmlString:gmatch("<(/?)([%w_]+)(.-)>") do    
+        
+        documentNode = OTMLDocumentNode:new(tagName)
+       -- print("{\r\n'tagSignal: " .. tagSignal .. ", \r\ntagName: " .. tagName.. "\r\n}")
+        if self:isOpeningTag(tagSignal) then
+            lastOpeningTag = tagName
+            --print("opening >> " .. tagName)
+            self:rootSetup()
+            self:setupWidgetAttributes(documentNode, attributes)
+            self:setupWidget(tagName)
+            isNodeOpened = false
         end
 
-        local widget = self.stylesMap[tag]:create(documentNode, parent)
-       
-        if not parent and widget then
+        if self:isClosingTag(tagSignal) then
+            --print("Closing >> " .. tagName)
+            self:setupClosing(tagName)
+            isNodeOpened = true
+        end
+        
+        local noParent = 'false'
+        local validWidget = 'false'
+        if ParseOTXML:hasNoParent() then
+            noParent = 'true'
+        end
+
+        if ParseOTXML:isValidWidget() then
+            validWidget = 'true'
+        end
+
+
+       -- print("hasNoParent: " .. noParent .. " and validWidget:" .. validWidget)
+        if ParseOTXML:hasNoParent() and ParseOTXML:isValidWidget() then
             parent = widget
-            lastClosedTag = tag
-            print("parent atual: " .. tag)
+            -- print("parent ID: " .. parent:getId())
+            lastParent = parent
             table.insert(stack, parent)
-        elseif isClosed and tag == lastClosedTag then
-            lastClosedTag = false
-            table.remove(stack)
-            print("voltando parent atual: " .. parent:getName())
-            parent = stack[#stack]
         end
-        
-        ::continue::
-        
     end
 end

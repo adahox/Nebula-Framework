@@ -10,5 +10,5 @@
 
 
 ## Fix
- - entender porque atualmente apenas o elemento <Panel> não consegue ser renderizado dentro e outro Panel
+ - Entender porque atualmente apenas o elemento <Panel> não consegue ser renderizado dentro e outro Panel
  

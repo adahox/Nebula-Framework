@@ -1,4 +1,7 @@
 {
     "Lua.runtime.version": "LuaJIT",
-    "Lua.diagnostics.globals": []
+    "Lua.diagnostics.globals": [],
+    "Lua.diagnostics.disable": [
+        "need-check-nil"
+    ]
 }

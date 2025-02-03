@@ -43,19 +43,40 @@ function WidgetUI:make(widgetName, parent)
     if parent then
         return UI.createWidget(widgetName, parent.widget)
     end 
-    print("criando widget => " .. widgetName)
     return UI.createWidget(widgetName)
     
 end
 
 function WidgetUI:create(widgetName, parent)
-    
+
     local self = setmetatable({}, WidgetUI)
     
+
     self.widget = WidgetUI:make(widgetName, parent)
     
+    -- setup default values
+    if parent then
+        self:setTopAnchor("prevBottom")
+        self:setMarginTop(4)
+    end
     self:setId(generateWidgetIds())
     return self
+end
+
+function WidgetUI:setValue(value)
+    return self.widget:setValue(tonumber(value))
+end
+
+function WidgetUI:setMaximum(value)
+    return self.widget:setMaximum(tonumber(value))
+end
+
+function WidgetUI:setMinimum(value)
+    return self.widget:setMinimum(tonumber(value))
+end
+
+function WidgetUI:setPercent(value)
+    return self.widget:setPercent(tonumber(value))
 end
 
 function WidgetUI:setId(id)
@@ -218,6 +239,11 @@ function WidgetUI:setTitle(value)
         self.widget:setTitle(value) 
     end
 end
+
+function WidgetUI:isTab(value)
+   self.isTab = value
+end
+
 
 function handleAnchors(value)
     

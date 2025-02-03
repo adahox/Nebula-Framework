@@ -12,7 +12,40 @@
             <Checkbox text="enable bot" id="checkbox" top="prevBottom" marginTop="4" left="parentLeft" marginLeft="4" right="parentRight" marginRight="4"></Checkbox>
             <ComboBox id="combo_principal" width="100" text="enable bot" top="prevBottom" marginTop="4" left="parentLeft" marginLeft="4" marginRight="4"></ComboBox>
             <Button text="active" id="button2" anchor="AnchorTop,checkbox,AnchorBottom" marginTop="4" left="prevRight" marginLeft="4" right="parentRight" marginRight="4"></Button>
-            <Panel name="panel_secundario" height="100" borderWidth="1" top="prevBottom" backgroundColor="#CCEEFF" marginRight="4" id="panel_secundario" marginLeft="4"></Panel>
+            <HorizontalSeparator marginTop="4" marginLeft="4" marginRight="4" marginBottom="4" left="parentLeft" right="parentRight" top="prevBottom"></HorizontalSeparator>
+            <FlatPanel
+                id="panel_secundario2"
+                name="panel_secundario"
+                height="110"
+                top="prevBottom"
+                left="parentLeft"
+                right="parentRight"
+                marginRight="4"
+                backgroundColor="#FF00FF"
+                marginLeft="4"
+                borderWidth="1"
+                borderColor="red"
+            >
+                <Button text="configs II" id="button2" top="parentTop" marginTop="4" left="parentLeft" marginLeft="4" right="parentRight" marginRight="4"></Button>
+                <Button text="configs III" id="button3" top="prevBottom" marginTop="4" left="parentLeft" marginLeft="4" right="parentRight" marginRight="4"></Button>
+                <Button text="configs IV" id="button4" top="prevBottom" marginTop="4" left="parentLeft" marginLeft="4" right="parentRight" marginRight="4"></Button>
+                <Button text="configs V" id="button5" top="prevBottom" marginTop="4" left="parentLeft" marginLeft="4" right="parentRight" marginRight="4"></Button>
+            </FlatPanel>
+            <Label id="um_label_qualquer" text="uma label qualquer" textAlign="16" left="parentLeft" right="parentRight" top="prevBottom" marginTop="4" backgroundColor="#FF00FF33"></Label>
+            <Button text="setup" id="setupbtn" top="prevBottom" marginTop="4" left="parentLeft" marginLeft="4" right="parentRight" marginRight="4"></Button>
+            <ComboBox id="combo_principal2" width="100" text="enable bot" top="prevBottom" marginTop="4" left="parentLeft" marginLeft="4" marginRight="4"></ComboBox>
+            <Button text="setup 2" id="setupbtn" top="prevTop" left="prevRight" marginLeft="4" right="parentRight" marginRight="4"></Button>
+            <HorizontalSeparator left="parentLeft" right="parentRight" marginTop="6" marginLeft="4" marginRight="4" marginBottom="6" top="prevBottom"></HorizontalSeparator>
+            <Label text="Minha Paciencia Loading" left="parentLeft" marginLeft="4" marginTop="4"></Label>
+            <ProgressBar
+                backgroundColor="yellow"
+                percent="30"
+                marginLeft="6"
+                left="parentLeft"
+                right="parentRight"
+                marginRight="6"
+
+            ></ProgressBar>
         </Panel>
     </Tab>
-</Otml >
+</Otml>

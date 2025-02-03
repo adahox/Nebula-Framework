@@ -31,6 +31,10 @@ function StylesHandler:init(documentNode)
         name = WidgetUI.setName,
         width = WidgetUI.setWidth,
         title = WidgetUI.setTitle,
+        value = WidgetUI.setValue,
+        maximum = WidgetUI.setMaximum,
+        minimum = WidgetUI.setMinimum,
+        percent = WidgetUI.setPercent
     }
 
     return self
@@ -42,4 +46,22 @@ function StylesHandler:buildStyle(widget)
         
         func(widget, property.valor)  -- Corrected: call the function with widget as the first argument
     end
+
+    -- adiciono esse widget no controller context :)
+    if ControllerContext then
+
+
+        Utils.loadClass(
+            "OTUIFramework/controllers/",
+            ControllerContext,
+            'inject'
+        )
+
+        local controllerDependencytable = {}
+        local widgetId = widget:getId()
+        controllerDependencytable[widgetId] = widget
+
+        controllerHandler:injectInto(controllerDependencytable[widgetId])
+    end
+
 end

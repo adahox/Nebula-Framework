@@ -12,6 +12,9 @@ local uiElements = {
     "Checkbox",
     "ComboBox",
     "Window",
+    "FlatPanel",
+    "HorizontalSeparator",
+    "ProgressBar"
 }
 
 function CoreUI.load(self)
@@ -27,7 +30,10 @@ function CoreUI.load(self)
         horizontalScroll=HorizontalScrollUI,
         panel=PanelUI,
         button=ButtonUI,
-        window=WindowUI
+        window=WindowUI,
+        flatPanel=FlatPanelUI,
+        horizontalSeparator=HorizontalSeparatorUI,
+        progressBar=ProgressBarUI,
     }, CoreUI)
 
     return self
