@@ -14,18 +14,20 @@ function TabStyle:create(documentNode, parent)
         documentNode:getPropertyByName("name")
     )
     
-    -- start loading controllers/
-    local controllerName = documentNode:getPropertyByName("controller")
-
-    Utils.loadClass(
-        "OTUIFramework/controllers/",
-        controllerName,
-        'create'
-    )
-
-    ControllerContext = controllerName
     
+    -- start settings controllerContext
+    local controllerName = documentNode:getPropertyByName("controller")
+    ControllerContext = controllerName
+
+
     return nil
+end
+
+function TabStyle:loadController()
+    Utils.loadFile(
+        "OTUIFramework/controllers/",
+        ControllerContext
+    )
 end
 
 

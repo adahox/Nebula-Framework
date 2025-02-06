@@ -12,3 +12,7 @@ function ButtonUI:new(parentUI)
     
     return self
 end
+
+function ButtonUI:hey()
+    print("i'm here!")
+end

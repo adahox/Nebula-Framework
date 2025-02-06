@@ -2,12 +2,22 @@ Controller = {}
 Controller.__index = Controller
 ControllerContext = nil
 
-function Controller:make()
-  local self = setmetatable({}, Controller)
-  self.dependencies = {}
-  return self
-end
+DependenciesList = {}
 
-function Controller:inject(dependency)
-  table.insert(self.dependencies, dependency)
+
+
+-- dependencyName: how you will call this dependency at controller
+-- dependenecy: dependency object associated to controller
+function Controller.inject(dependencyName, dependency)
+
+  if not DependenciesList[ControllerContext] then
+    DependenciesList[ControllerContext] = {}
+  end  
+  if not dependency then
+    print("Dependency is null")
+  else
+    print("Adicionando " .. dependencyName .. " on " .. ControllerContext)
+    DependenciesList[ControllerContext][dependencyName] = dependency
+  end
+  
 end

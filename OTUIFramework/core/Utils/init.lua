@@ -23,10 +23,11 @@ function Utils.loadClass(pathFile, className, methodName)
     
     local code = className .. ":" .. methodName .. "()"
 
+    local status, instance = load(code)
 
-    local status, instance = pcall("HealController.create")
 
-    print(status)
+end
 
-    return instance
+function Utils.loadFile(pathFile, fileName)
+    dofile(pathFile .. fileName .. ".lua")
 end

@@ -127,6 +127,10 @@ function ParseOTXML:setupClosing(tagName)
         lastParent = table.remove(stack)
         parent = stack[#stack]
     end
+
+    if tagName == "Tab" then
+        self.stylesMap[tagName]:loadController()
+    end
 end
 
 function ParseOTXML:hasNoParent()

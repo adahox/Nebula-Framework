@@ -4,14 +4,14 @@
             <Label backgroundColor="#FF000055" text="Healer Module" id="titleModule" textAlign="16" right="parentRight" left="parentLeft" top="parentTop">
             </Label>
             <BotItem marginTop="4" marginLeft="4" id="healBotItem" top="prevBottom" left="parentLeft"></BotItem>
-            <HorizontalScroll anchor="AnchorTop,titleModule,AnchorBottom" left="prevRight" marginTop="14" marginLeft="4" right="parentRight" marginRight="4"></HorizontalScroll>
+            <HorizontalScroll id="scroll" anchor="AnchorTop,titleModule,AnchorBottom" left="prevRight" marginTop="14" marginLeft="4" right="parentRight" marginRight="4"></HorizontalScroll>
             <Label backgroundColor="#FF000055" text="" id="healHSvalue" textAlign="16" right="parentRight" left="parentLeft" anchor="AnchorTop,healBotItem,AnchorBottom" marginTop="4" marginLeft="4" marginRight="4"></Label>
             <Label backgroundColor="#00FF0055" text="" id="healHSvalue2" textAlign="16" right="parentRight" left="parentLeft" top="prevBottom" marginTop="4" marginLeft="4" marginRight="4"></Label>
             <Label backgroundColor="#0000FF55" text="" id="healHSvalue3" textAlign="16" right="parentRight" left="parentLeft" top="prevBottom" marginTop="4" marginLeft="4" marginRight="4"></Label>
             <Button text="configs" id="button" top="prevBottom" marginTop="4" left="parentLeft" marginLeft="4" right="parentRight" marginRight="4"></Button>
             <Checkbox text="enable bot" id="checkbox" top="prevBottom" marginTop="4" left="parentLeft" marginLeft="4" right="parentRight" marginRight="4"></Checkbox>
             <ComboBox id="combo_principal" width="100" text="enable bot" top="prevBottom" marginTop="4" left="parentLeft" marginLeft="4" marginRight="4"></ComboBox>
-            <Button text="active" id="button2" anchor="AnchorTop,checkbox,AnchorBottom" marginTop="4" left="prevRight" marginLeft="4" right="parentRight" marginRight="4"></Button>
+            <Button text="click me" id="button1" anchor="AnchorTop,checkbox,AnchorBottom" marginTop="4" left="prevRight" marginLeft="4" right="parentRight" marginRight="4"></Button>
             <HorizontalSeparator marginTop="4" marginLeft="4" marginRight="4" marginBottom="4" left="parentLeft" right="parentRight" top="prevBottom"></HorizontalSeparator>
             <FlatPanel
                 id="panel_secundario2"
@@ -39,6 +39,7 @@
             <Label text="Minha Paciencia Loading" left="parentLeft" marginLeft="4" marginTop="4"></Label>
             <ProgressBar
                 backgroundColor="yellow"
+                id="progress"
                 percent="30"
                 marginLeft="6"
                 left="parentLeft"

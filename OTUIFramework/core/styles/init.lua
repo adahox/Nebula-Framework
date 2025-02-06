@@ -11,6 +11,7 @@ function StylesHandler:init(documentNode)
     local self = setmetatable({}, {__index = StylesHandler})
     self.documentNode = documentNode
 
+
     self.styleProperties = {
         id = WidgetUI.setId,
         text = WidgetUI.setText,
@@ -50,18 +51,10 @@ function StylesHandler:buildStyle(widget)
     -- adiciono esse widget no controller context :)
     if ControllerContext then
 
-
-        Utils.loadClass(
-            "OTUIFramework/controllers/",
-            ControllerContext,
-            'inject'
-        )
-
-        local controllerDependencytable = {}
         local widgetId = widget:getId()
-        controllerDependencytable[widgetId] = widget
 
-        controllerHandler:injectInto(controllerDependencytable[widgetId])
+        -- inject controller
+        Controller.inject(widgetId, widget.widget)
     end
 
 end

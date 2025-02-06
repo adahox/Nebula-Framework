@@ -53,6 +53,8 @@ function WidgetUI:create(widgetName, parent)
     
 
     self.widget = WidgetUI:make(widgetName, parent)
+
+    WidgetUI.onClick = self.widget.onClick
     
     -- setup default values
     if parent then
