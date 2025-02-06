@@ -17,4 +17,3 @@ Nebula ainda está em sua versão beta e muitas coisas como precisam ser trabalh
 |  stage |
 ----------
 |  alpha |
-----------
