@@ -11,9 +11,3 @@ encapsulamento de regras direta e exclusiva da controller. A manipulação de wi
 automatica e fácil.
 
 Nebula ainda está em sua versão beta e muitas coisas como precisam ser trabalhadas.
-
-
-----------
-|  stage |
-----------
-|  alpha |
