@@ -17,7 +17,7 @@ function ParseOTXML:run()
     local self = {}
     setmetatable(self,  {__index = ParseOTXML})
     
-    self.basePath = "/bot/estudo/OTUIFramework"
+    self.basePath = "/bot/" .. Config.BOT_FOLDER_NAME  .. "/OTUIFramework"
     self.viewPath = self.basePath .. "/view/"
     self.parseClassesPath = "OTUIFramework/core/parsers/otml/classes"
     self.stylesPath = "OTUIFramework/core/styles"

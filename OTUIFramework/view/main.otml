@@ -1,3 +1,4 @@
 <Otml version="1.0">
-    <Tab name="Sample" controller="SampleController"></Tab>
+    <Tab name="Sample" controller="SampleController">
+    </Tab>
 </Otml>
